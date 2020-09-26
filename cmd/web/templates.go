@@ -5,11 +5,13 @@ import (
 	"path/filepath"
 	"time"
 
+	"onlion.nu/letsgo/pkg/forms"
 	"onlion.nu/letsgo/pkg/models"
 )
 
 type templateData struct {
 	CurrentYear int
+	Form        *forms.Form
 	Snippet     *models.Snippet
 	Snippets    []*models.Snippet
 }
@@ -29,8 +31,6 @@ func newTemplateCache(dir string) (map[string]*template.Template, error) {
 		return nil, err
 	}
 	for _, page := range pages {
-		// Extract the file name (like 'home.page.tmpl') from the full file path
-		// and assign it to the name variable.
 		name := filepath.Base(page)
 
 		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
